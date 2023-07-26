@@ -17,68 +17,138 @@ const Register = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [mobileError, setMobileError] = useState('');
+  const [secretKeyError, setSecretKeyError] = useState('');
+  const [addressError, setaddressError] = useState('');
 
-  // validate form
-  const validateForm = () => {
-    let isValid = true;
+  const validateEmail = (email) => {
+    // email regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+  const validatePassword = (password) => {
+    // password regex
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    return passwordRegex.test(password);
+  };
 
-    // Validate name
-    if (!name) {
-      setNameError('Name is required');
-      isValid = false;
-    } else if (!/^[A-Za-z\s]+$/.test(name)) {
-      setNameError('Name should contain only letters and spaces');
-      isValid = false;
-    } else {
-      setNameError('');
-    }
+  const validateName = (name) => {
+    // name regex
+    const nameRegex = /^[A-Za-z\s]+$/;
+    return nameRegex.test(name);
+  };
 
-    // Validate email
-    if (!email) {
-      setEmailError('Email is required');
-      isValid = false;
-    } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+  const validateMobile = (mobile) => {
+    // mobile regex
+    const mobileRegex = /^[6-9]\d{9}$/;
+    return mobileRegex.test(mobile);
+  };
+
+  const handleEmailChange = (e) => {
+    setemail(e.target.value);
+    if (!validateEmail(e.target.value)) {
       setEmailError('Invalid email format');
-      isValid = false;
     } else {
       setEmailError('');
     }
+  };
 
-    // Validate mobile
-    if (!mobile) {
-      setMobileError('Mobile Number is required');
-      isValid = false;
-    } else if (!/^[6-9]\d{9}$/.test(mobile)) {
+  const handleNameChange = (e) => {
+    setname(e.target.value);
+    if (!validateName(e.target.value)) {
+      setNameError('Name should contain only letters and spaces');
+    } else {
+      setNameError('');
+    }
+  };
+
+  const handleSecretKeyChange = (e) => {
+    setSecretKey(e.target.value);
+    if (!e.target.value.trim()) {
+      setSecretKeyError('Secret Key is required');
+    } else {
+      setSecretKeyError('');
+    }
+  };
+
+  const handleaddressChange = (e) => {
+    setaddress(e.target.value);
+    if (!e.target.value.trim()) {
+      setaddressError('Address is required');
+    } else {
+      setaddressError('');
+    }
+  };
+
+  const handleMobileChange = (e) => {
+    setmobile(e.target.value);
+    if (!validateMobile(e.target.value)) {
       setMobileError('Invalid mobile format');
-      isValid = false;
     } else {
       setMobileError('');
     }
+  };
 
-    // Validate password
-    if (!password) {
-      setPasswordError('Password is required');
-      isValid = false;
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) {
-      setPasswordError(
-        'Password should be at least 8 characters long and contain at least 1 character, 1 number, 1 capital letter, and 1 small letter'
-      );
-      isValid = false;
+  const handlePasswordChange = (e) => {
+    setpassword(e.target.value);
+    if (!validatePassword(e.target.value)) {
+      setPasswordError( 'Password should be at least 8 characters and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter');
     } else {
       setPasswordError('');
     }
-
-    return isValid;
   };
+
+  
 
   // submit form
 
   const submitForm = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
-      return;
-    }
+   
+ // all fields required validation
+ if (!email.trim()) {
+  setEmailError('Email is required');
+}
+
+else if (!validateEmail(email)) {
+  setEmailError('Invalid email format');
+}
+
+if (!name.trim()) {
+  setNameError('Name is required');
+}
+
+else if (!validateName(name)) {
+  setNameError('Invalid Name format');
+}
+
+if (!secretKey.trim()) {
+  setSecretKeyError('Secret Key is required');
+}
+
+if (!address.trim()) {
+  setaddressError(' Address is required');
+}
+
+
+if (!mobile.trim()) {
+  setMobileError('Mobile is required');
+}
+
+else if (!validateMobile(mobile)) {
+  setMobileError('Invalid Mobile format');
+}
+
+if(!password.trim()){
+  setPasswordError('Password is required')
+}
+
+else if (password && !validatePassword(password)) {
+  setPasswordError(
+    'Password should be at least 8 characters and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter'
+  );
+}
+
 
     try {
       const res = await axios.post(`/api/auth/register`, {
@@ -105,13 +175,13 @@ const Register = () => {
 
   return (
     <Layout title="Register">
-      <div className="register user-account">
-        <h1 className='home-heading'>REGISTER</h1>
+      <div className="register user-account d-flex flex-column">
+        <h1 className='home-heading pb-2 pt-2'>REGISTER</h1>
         <form onSubmit={submitForm}>
-          <div className="mb-3 register-input">
+          <div className="mb-1 register-input">
             <input
-              required
-              onChange={(e) => setname(e.target.value)}
+   
+              onChange={handleNameChange}
               value={name}
               placeholder="Name"
               type="text"
@@ -120,22 +190,22 @@ const Register = () => {
             />
             {nameError && <div className="invalid-feedback">{nameError}</div>}
           </div>
-          <div className="mb-3 register-input">
+          <div className='mb-1 register-input'>
             <input
-              required
-              onChange={(e) => setemail(e.target.value)}
+      
+              onChange={handleEmailChange}
               value={email}
-              placeholder="Email"
-              type="email"
+              placeholder='Email'
+              type='email'
               className={`form-control ${emailError ? 'is-invalid' : ''}`}
-              id="exampleInputEmail1"
+              id='exampleInputEmail1'
             />
-            {emailError && <div className="invalid-feedback">{emailError}</div>}
+            {emailError && <div className='invalid-feedback'>{emailError}</div>}
           </div>
-          <div className="mb-3 register-input">
+          <div className="mb-1 register-input">
             <input
-              required
-              onChange={(e) => setpassword(e.target.value)}
+
+              onChange={handlePasswordChange}
               value={password}
               placeholder="Password"
               type="password"
@@ -144,10 +214,10 @@ const Register = () => {
             />
             {passwordError && <div className="invalid-feedback">{passwordError}</div>}
           </div>
-          <div className="mb-3 register-input">
+          <div className="mb-1 register-input">
             <input
-              required
-              onChange={(e) => setmobile(e.target.value)}
+ 
+              onChange={handleMobileChange}
               value={mobile}
               placeholder="Mobile Number"
               type="number"
@@ -156,27 +226,29 @@ const Register = () => {
             />
             {mobileError && <div className="invalid-feedback">{mobileError}</div>}
           </div>
-          <div className="mb-3 register-input">
+          <div className="mb-1 register-input">
             <input
-              required
-              onChange={(e) => setaddress(e.target.value)}
+          
+              onChange={handleaddressChange}
               value={address}
               placeholder="Address"
               type="text"
-              className="form-control"
+              className={`form-control ${addressError ? 'is-invalid' : ''}`}
               id="exampleInputAddress1"
             />
+             {addressError && <div className="invalid-feedback">{addressError}</div>}
           </div>
-          <div className="mb-3 register-input">
+          <div className="mb-1 register-input">
             <input
-              required
-              onChange={(e) => setSecretKey(e.target.value)}
+        
+              onChange={handleSecretKeyChange}
               value={secretKey}
               placeholder="Add a Secret Key"
               type="text"
-              className="form-control"
+              className={`form-control ${secretKeyError ? 'is-invalid' : ''}`}
               id="exampleInputSecretKey1"
             />
+             {secretKeyError && <div className="invalid-feedback">{secretKeyError}</div>}
           </div>
           <button type="submit" className="btn btn-warning">
             Register

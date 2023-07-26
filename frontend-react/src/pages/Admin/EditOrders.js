@@ -47,8 +47,8 @@ const EditOrders = () => {
       </div>
       <div className='col-8'>
         <h1 className='text-center home-heading'>All Orders</h1>
-        <div className='border shadow'>
-        <table className='table'>
+        <div className='border shadow all-category'>
+        <table className='table '>
                       <thead>
                         <tr>
                           <th scope='col'># </th>
@@ -72,7 +72,7 @@ const EditOrders = () => {
                                ))}
                             </Select>
                         </td>
-           <td><img className="card-img-top" src={`/api/product/product-image/${order?.products[0]?._id}`} alt={order?.products[0]?.name} /></td> 
+           <td><img className="card-img-top" src={`/api/product/product-image/${order?.products[0]?._id}`} alt={order?.products[0]?.name} height="100vw" /></td> 
             <td> {order?.products[0]?.name}</td>
             <td className='card-price'><b> $ {order?.products[0]?.price}</b></td>
                         </tr>

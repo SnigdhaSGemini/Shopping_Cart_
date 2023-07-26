@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const PageNotFound = () => {
   return (
     <Layout title={"Page Not Found"}>
-      <div className='errorPage'>
+      <div className='errorPage h-100'>
         <h2>404 error : Page not found </h2>
         <Link to="/" className="error-button"> Go to Home</Link>
       </div>

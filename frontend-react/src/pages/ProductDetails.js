@@ -26,7 +26,7 @@ const params = useParams()
   return (
     <Layout>
      <h1 className='text-center pt-3 home-heading'> Product Details</h1>
-    <div className='d-flex justify-content-around'>
+    <div className='d-flex justify-content-around h-80'>
     <div className='col-5 m-3'>
     <img className="card-img-top" src={`/api/product/product-image/${product._id}`} alt={product.name} />
     </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Layout from './Layouts/Layout'
 import { useCart } from '../Contexts/Cart';
 import { useAuth } from '../Contexts/Authorization';
@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 
 // Cart Page
+
 
 const Cart = () => {
     const [cart,setCart] = useCart();
@@ -66,7 +67,7 @@ const Cart = () => {
 
   return (
     <Layout>
-      <div>
+      <div className=' h-100 '>
         <h1 className='text-center p-3 home-heading'> Your Cart</h1>
         {authorization?.token ? (<><h5 className='text-center p-3 pt-0 home-filter'> Welcome {authorization?.user.name}</h5>
         {cart?.length > 0 ? (<>
@@ -112,8 +113,8 @@ const Cart = () => {
         </>)}
         </div>
        </div>
-        </>) : (<p className='text-center p-3'>Your cart is Empty</p>) }
-        </>) : (<div className='text-center p-3'>
+        </>) : (<p className='text-center p-3 cart set-cart'>Your cart is Empty</p>) }
+        </>) : (<div className='text-center p-3 cart set-cart'>
         <h5 className='text-center p-3'>Please Login first To Access Your Cart</h5>
         <button className='btn btn-outline-danger m-3' onClick={()=>navigate("/login")}>Go to Login Page</button>
         </div>)}

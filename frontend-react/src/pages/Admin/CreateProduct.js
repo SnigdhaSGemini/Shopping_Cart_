@@ -22,6 +22,8 @@ const CreateProduct = () => {
   const [productNameError, setProductNameError] = useState('');
   const [productPriceError, setProductPriceError] = useState('');
   const [productQuantityError, setProductQuantityError] = useState('');
+  const [CategoryError,setCategoryError] = useState('');
+  const [DescriptionError,setDescriptionError] = useState('');
 
   const navigate = useNavigate();
 
@@ -42,21 +44,58 @@ const CreateProduct = () => {
     getAll();
   }, []);
 
+  const handleCategoryChange = (value) => {
+    setCategory(value);
+  
+    if (!value) {
+      setCategoryError('Category is required');
+    } else {
+      setCategoryError('');
+    }
+  };
+  
+  const handleDescriptionChange = (e) => {
+    const inputValue = e.target.value;
+    setDescription(inputValue);
+  
+    if (!inputValue.trim()) {
+      setDescriptionError('Description is required');
+    } else {
+      setDescriptionError('');
+    }
+  };
+
   // for create product form validation - only desired format accepted
   const validateForm = () => {
     let isValid = true;
 
     // Validate image
+    console.log(image, image.name);
     if (!image) {
       setImageNameError('Image is required');
       isValid = false;
     } else if (!/\.(jpg|jpeg|png)$/.test(image.name.toLowerCase())) {
-      setImageNameError('Accepted file formats are only .jpg, .jpeg, .png');
+      setImageNameError('Accepted file formats are only .jpg, .jpeg, .png and should be less than 1 MB');
       isValid = false;
     } else {
       setImageNameError('');
     }
 
+  if(!category.trim()){
+    setCategoryError("Category is required");
+    isValid = false;
+  }
+  else{
+    setCategoryError('');
+  }
+  if(!description.trim()){
+    setDescriptionError("Description is required");
+    isValid = false;
+  }
+  else{
+    setDescriptionError('');
+  }
+    
     // Validate product name
     if (!name.trim()) {
       setProductNameError('Product Name is required');
@@ -122,6 +161,46 @@ const CreateProduct = () => {
     }
   };
 
+  // Input field onChange event handlers
+  const handleNameChange = (e) => {
+    const inputValue = e.target.value.trim();
+    setName(inputValue);
+
+    if (!inputValue) {
+      setProductNameError('Product Name is required');
+    } else if (!/^[a-zA-Z\s]+$/.test(inputValue)) {
+      setProductNameError('Product Name should only contain spaces and letters');
+    } else {
+      setProductNameError('');
+    }
+  };
+
+  const handlePriceChange = (e) => {
+    const inputValue = e.target.value;
+    setPrice(inputValue);
+
+    if (!inputValue) {
+      setProductPriceError('Product Price is required and should be a number');
+    } else if (!/^\d{1,7}$/.test(inputValue)) {
+      setProductPriceError('Product Price should be a number not more than 7 characters');
+    } else {
+      setProductPriceError('');
+    }
+  };
+
+  const handleQuantityChange = (e) => {
+    const inputValue = e.target.value;
+    setQuantity(inputValue);
+
+    if (!inputValue) {
+      setProductQuantityError('Product Quantity is required and should be a number');
+    } else if (!/^\d{1,7}$/.test(inputValue)) {
+      setProductQuantityError('Product Quantity should be a number not more than 7 characters');
+    } else {
+      setProductQuantityError('');
+    }
+  };
+
   return (
     <Layout title={"Create Product"}>
       <div className='conatiner-fluid d-flex justify-content-around m-3 p-3'>
@@ -136,8 +215,9 @@ const CreateProduct = () => {
               placeholder="Select Category"
               size='small'
               showSearch
-              className='form-select mb-3'
-              onChange={(value) => setCategory(value)}
+            
+              className={`form-select mb-3 ${CategoryError ? 'is-invalid' : ''}`}
+              onChange={handleCategoryChange}
             >
               {allCategory?.map(val => (
                 <Option key={val._id} value={val._id}>
@@ -145,6 +225,7 @@ const CreateProduct = () => {
                 </Option>
               ))}
             </Select>
+            {CategoryError && <div className="invalid-feedback">{CategoryError}</div>}
             <div className="mb-3">
               <label className={`btn btn-outline-danger col-12 ${imageNameError ? 'is-invalid' : ''}`}>
                 {image ? image.name : ' Upload Image'}
@@ -165,7 +246,7 @@ const CreateProduct = () => {
                 value={name}
                 placeholder="Product Name"
                 className={`form-control ${productNameError ? 'is-invalid' : ''}`}
-                onChange={(e) => setName(e.target.value)}
+                onChange={handleNameChange} // Updated onChange event handler for name input
               />
               {productNameError && <div className="invalid-feedback">{productNameError}</div>}
             </div>
@@ -174,9 +255,10 @@ const CreateProduct = () => {
                 type="text"
                 value={description}
                 placeholder="Product Description"
-                className="form-control"
-                onChange={(e) => setDescription(e.target.value)}
+                className={`form-control ${DescriptionError ? 'is-invalid' : ''}`}
+                onChange={handleDescriptionChange}
               />
+                 {DescriptionError && <div className="invalid-feedback">{DescriptionError}</div>}
             </div>
             <div className="mb-3">
               <input
@@ -184,7 +266,7 @@ const CreateProduct = () => {
                 value={price}
                 placeholder="Product Price"
                 className={`form-control ${productPriceError ? 'is-invalid' : ''}`}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={handlePriceChange} // Updated onChange event handler for price input
               />
               {productPriceError && <div className="invalid-feedback">{productPriceError}</div>}
             </div>
@@ -194,7 +276,7 @@ const CreateProduct = () => {
                 value={quantity}
                 placeholder="Product Quantity"
                 className={`form-control ${productQuantityError ? 'is-invalid' : ''}`}
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={handleQuantityChange} // Updated onChange event handler for quantity input
               />
               {productQuantityError && <div className="invalid-feedback">{productQuantityError}</div>}
             </div>
@@ -212,7 +294,7 @@ const CreateProduct = () => {
               </Select>
             </div>
             <div className="mb-3">
-              <button className="btn btn-secondary" onClick={createProduct}>Create</button>
+              <button className="btn btn-secondary" onClick={createProduct} >Create</button>
             </div>
           </div>
         </div>

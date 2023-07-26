@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useAuth } from '../../Contexts/Authorization';
+import { useCart } from '../../Contexts/Cart';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,56 +14,66 @@ const Login = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [authorization, setAuthorization] = useAuth();
+  const [cart,setCart] = useCart();
 
   // validate email
   const validateEmail = (email) => {
-    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    // email regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
     // validate password
-  const validatePassword = (password) => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    return passwordRegex.test(password);
-  };
+    const validatePassword = (password) => {
+      // Password should be at least 8 characters long and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      return passwordRegex.test(password);
+    };
 
-  const validateForm = () => {
-    let isValid = true;
-
-    // Validate email
-    if (!email) {
-      setEmailError('Email is required');
-      isValid = false;
-    } else if (!validateEmail(email)) {
+     // validation on email change
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    if (!validateEmail(e.target.value)) {
       setEmailError('Invalid email format');
-      isValid = false;
     } else {
       setEmailError('');
     }
-
-    // Validate password
-    if (!password) {
-      setPasswordError('Password is required');
-      isValid = false;
-    } else if (!validatePassword(password)) {
-      setPasswordError(
-        'Password should be at least 8 characters long and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter'
-      );
-      isValid = false;
-     } else {
-      setPasswordError('');
-    }
-
-    return isValid;
   };
+      // validation on password change
+      const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+        if (e.target.value && !validatePassword(e.target.value)) {
+          setPasswordError(
+            'Password should be at least 8 characters and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter'
+          );
+        } else {
+          setPasswordError('');
+          
+        }
+      };
 
+  
   // submit form
 
   const submitForm = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
-      return;
+
+    if (!email.trim()) {
+      setEmailError('Email is required');
+    }
+
+    else if (!validateEmail(email)) {
+      setEmailError('Invalid email format');
+    }
+
+    if(!password.trim()){
+      setPasswordError('Password is required')
+    }
+
+    else if (password && !validatePassword(password)) {
+      setPasswordError(
+        'Password should be at least 8 characters and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter'
+      );
     }
 
     try {
@@ -78,6 +89,15 @@ const Login = () => {
           localStorage.setItem('auth', JSON.stringify(res.data));
           navigate(location.state || '/');
         }, 2000);
+
+         if(localStorage.getItem(res.data.user.name) === null){
+          localStorage.setItem("cart",JSON.stringify([]));
+          setCart([]);
+         }
+         else{
+          localStorage.setItem("cart",JSON.stringify(localStorage.getItem(res.data.user.name) ));
+           setCart(JSON.parse(localStorage.getItem(res.data.user.name)));
+         }
       } else {
         toast.error(res.data.message);
       }
@@ -89,32 +109,30 @@ const Login = () => {
 
   return (
     <Layout title="Register">
-      <div className="register user-account">
-        <h1 className='home-heading'>LOGIN</h1>
+      <div className="register user-account h-100">
+        <h1 className='home-heading pt-2'>LOGIN</h1>
         <form onSubmit={submitForm}>
-          <div className="mb-3 register-input">
+        <div className='mb-3 register-input'>
             <input
-              required
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               value={email}
-              placeholder="Email"
-              type="email"
+              placeholder='Email'
+              type='email'
               className={`form-control ${emailError ? 'is-invalid' : ''}`}
-              id="exampleInputEmail1"
+              id='exampleInputEmail1'
             />
-            {emailError && <div className="invalid-feedback">{emailError}</div>}
+            {emailError && <div className='invalid-feedback'>{emailError}</div>}
           </div>
-          <div className="mb-3 register-input">
+          <div className='mb-3 register-input'>
             <input
-              required
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               value={password}
-              placeholder="Password"
-              type="password"
+              placeholder='New Password'
+              type='password'
               className={`form-control ${passwordError ? 'is-invalid' : ''}`}
-              id="exampleInputPassword1"
+              id='exampleInputPassword1'
             />
-            {passwordError && <div className="invalid-feedback">{passwordError}</div>}
+            {passwordError && <div className='invalid-feedback'>{passwordError}</div>}
           </div>
           <button
             type="button"
@@ -125,7 +143,8 @@ const Login = () => {
           >
             Forgot Password
           </button>
-          <button type="submit" className="btn btn-warning">
+
+          <button type="submit" className="btn btn-warning" >
             Login
           </button>
         </form>

@@ -5,7 +5,7 @@ import Layout from '../Components/Layouts/Layout'
 const About = () => {
   return (
     <Layout title={"About Us"}>
-    <div className="row contactus ">
+    <div className="row contactus  h-100 ">
       <div className="col-5 ">
         <img
           src="/Images/aboutus.jpg"

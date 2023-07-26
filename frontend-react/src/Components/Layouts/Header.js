@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavLink , Link} from 'react-router-dom'
 import {BsFillHandbagFill} from 'react-icons/bs'
 import { useAuth } from '../../Contexts/Authorization'
 import useCategory from '../../CustomHooks/useCategory'
 import toast from 'react-hot-toast';
-import Dashboard from './../../pages/Users/Dashboard';
 import SearchInput from '../Forms/SearchInput';
 import { useCart } from '../../Contexts/Cart'
 import { Badge } from 'antd';
@@ -12,8 +11,10 @@ import { Badge } from 'antd';
 // Header Component
 const Header = () => {
   const [authorization,setAuthorization] = useAuth();
-  const [cart] = useCart()
+  const [cart,setCart] = useCart();
   const categories = useCategory();
+
+  
 
   // Logout Functionality
   const logout = ()=>{
@@ -23,6 +24,9 @@ const Header = () => {
       token:""
     })
     localStorage.removeItem('auth');
+    localStorage.setItem(`${authorization?.user.name}`, localStorage.getItem("cart"));
+    localStorage.setItem("cart",JSON.stringify([]));
+    setCart([]);
     toast.success("User Logged Out!");
   }
   

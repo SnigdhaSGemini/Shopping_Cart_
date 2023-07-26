@@ -11,7 +11,7 @@ const ForgotPassword = () => {
   const [secretKey, setSecretKey] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
+  const [secretKeyError, setSecretKeyError] = useState('');
   const validateEmail = (email) => {
     // email regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,6 +33,18 @@ const ForgotPassword = () => {
       setEmailError('');
     }
   };
+  
+  // validation on secret key change
+  const handleSecretKeyChange = (e) => {
+    setSecretKey(e.target.value);
+    if (!e.target.value.trim()) {
+      setSecretKeyError('Secret Key is required');
+    } else {
+      setSecretKeyError('');
+    }
+  };
+
+
 
     // validation on password change
   const handlePasswordChange = (e) => {
@@ -43,6 +55,7 @@ const ForgotPassword = () => {
       );
     } else {
       setPasswordError('');
+      
     }
   };
 
@@ -53,21 +66,24 @@ const ForgotPassword = () => {
     // all fields required validation
     if (!email.trim()) {
       setEmailError('Email is required');
-      return;
     }
 
-    if (!validateEmail(email)) {
+    else if (!validateEmail(email)) {
       setEmailError('Invalid email format');
-      return;
+    }
+    if (!secretKey.trim()) {
+      setSecretKeyError('Secret Key is required');
     }
 
-    if (newPassword && !validatePassword(newPassword)) {
+    if(!newPassword.trim()){
+      setPasswordError('Password is required')
+    }
+
+    else if (newPassword && !validatePassword(newPassword)) {
       setPasswordError(
         'Password should be at least 8 characters and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter'
       );
-      return;
     }
-
     try {
       const res = await axios.post(`/api/auth/forgot-password`, { email, newPassword, secretKey });
       if (res && res.data.success) {
@@ -86,12 +102,11 @@ const ForgotPassword = () => {
 
   return (
     <Layout title={'Forgot Password'}>
-      <div className='register user-account'>
+      <div className='register user-account h-100'>
         <h1 className='home-heading'>RESET PASSWORD</h1>
         <form onSubmit={submitForm}>
           <div className='mb-3 register-input'>
             <input
-              required
               onChange={handleEmailChange}
               value={email}
               placeholder='Email'
@@ -103,18 +118,17 @@ const ForgotPassword = () => {
           </div>
           <div className='mb-3 register-input'>
             <input
-              required
-              onChange={(e) => setSecretKey(e.target.value)}
+              onChange={handleSecretKeyChange}
               value={secretKey}
               placeholder='Secret Key'
               type='text'
-              className='form-control'
+              className={`form-control ${secretKeyError ? 'is-invalid' : ''}`}
               id='exampleInputSecretKey1'
             />
+              {secretKeyError && <div className='invalid-feedback'>{secretKeyError}</div>}
           </div>
           <div className='mb-3 register-input'>
             <input
-              required
               onChange={handlePasswordChange}
               value={newPassword}
               placeholder='New Password'

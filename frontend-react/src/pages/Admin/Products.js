@@ -23,7 +23,7 @@ const Products = () => {
     },[])
   return (
     <Layout>
-    <div className='d-flex p-3 justify-content-around'>
+    <div className='d-flex p-3 justify-content-around h-100'>
     <div className='col-3 '>
         <AdminMenu/>
       </div>

@@ -8,13 +8,13 @@ const Dashboard = () => {
     const [authorization] = useAuth();
   return (
     <Layout title={"Dashboard"}>
-     <div className='column-fluid m-3 p-3 d-flex'>
-        <div className='col-3'>
+     <div className='column-fluid  d-flex justify-content-between h-100 m-0'>
+        <div className='col-3 m-5 '>
             <UserMenu/>
         </div>
-        <div className='col-9'>
-           <div className='card p-3 m-3 cart'>
-            <h3 className='home-heading text-center'>{authorization?.user.name}</h3>
+        <div className='col-8 d-flex justify-content-around all-category   p-5'>
+           <div className='card p-3 w-50 bg-light d-flex justify-content-center align-items-center'>
+           <h3 className='home-heading text-center  pb-5'>{authorization?.user.name}</h3>
             <p className='home-filter text-center'>Email: {authorization?.user.email}</p>
             <p className='home-filter text-center'>Mobile: {authorization?.user.mobile}</p>
             <p className='home-filter text-center'>Address: {authorization?.user.address}</p>

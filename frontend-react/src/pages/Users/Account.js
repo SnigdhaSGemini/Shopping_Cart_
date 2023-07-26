@@ -12,9 +12,11 @@ const Account = () => {
   const [password, setPassword] = useState('');
   const [mobile, setMobile] = useState('');
   const [address, setAddress] = useState('');
-  const [nameError, setNameError] = useState('');
-  const [mobileError, setMobileError] = useState('');
+
+   const [nameError, setNameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [mobileError, setMobileError] = useState('');
+  const [addressError, setaddressError] = useState('');
 
   useEffect(() => {
     const { name, email, mobile, address } = authorization?.user;
@@ -24,45 +26,57 @@ const Account = () => {
     setAddress(address);
   }, [authorization?.user]);
 
-  // validate password
   const validatePassword = (password) => {
+    // password regex
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     return passwordRegex.test(password);
   };
 
-  // validate mobile
+  const validateName = (name) => {
+    // name regex
+    const nameRegex = /^[A-Za-z\s]+$/;
+    return nameRegex.test(name);
+  };
+
   const validateMobile = (mobile) => {
+    // mobile regex
     const mobileRegex = /^[6-9]\d{9}$/;
     return mobileRegex.test(mobile);
   };
 
-  // on change validate name
+
   const handleNameChange = (e) => {
     setName(e.target.value);
-    if (!e.target.value.trim()) {
-      setNameError('Name is required');
+    if (!validateName(e.target.value)) {
+      setNameError('Name should contain only letters and spaces');
     } else {
       setNameError('');
     }
   };
 
-    // on change validate number
+
+  const handleaddressChange = (e) => {
+    setAddress(e.target.value);
+    if (!e.target.value.trim()) {
+      setaddressError('Address is required');
+    } else {
+      setaddressError('');
+    }
+  };
+
   const handleMobileChange = (e) => {
     setMobile(e.target.value);
     if (!validateMobile(e.target.value)) {
-      setMobileError('Mobile should start with 6, 7, 8, or 9 and be exactly 10 characters long');
+      setMobileError('Invalid mobile format');
     } else {
       setMobileError('');
     }
   };
 
-    // on change validate password
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    if (e.target.value && !validatePassword(e.target.value)) {
-      setPasswordError(
-        'Password should be at least 8 characters and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter'
-      );
+    if (!validatePassword(e.target.value)) {
+      setPasswordError( 'Password should be at least 8 characters and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter');
     } else {
       setPasswordError('');
     }
@@ -72,22 +86,40 @@ const Account = () => {
   const submitForm = async (e) => {
     e.preventDefault();
 
-    if (!name.trim()) {
-      setNameError('Name is required');
-      return;
-    }
+     
+ // all fields required validation
 
-    if (mobile && !validateMobile(mobile)) {
-      setMobileError('Mobile should start with 6, 7, 8, or 9 and be exactly 10 characters long');
-      return;
-    }
 
-    if (password && !validatePassword(password)) {
-      setPasswordError(
-        'Password should be at least 8 characters and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter'
-      );
-      return;
-    }
+if (!name.trim()) {
+  setNameError('Name is required');
+}
+
+else if (!validateName(name)) {
+  setNameError('Invalid Name format');
+}
+
+if (!address.trim()) {
+  setaddressError(' Address is required');
+}
+
+
+if (!mobile.trim()) {
+  setMobileError('Mobile is required');
+}
+
+else if (!validateMobile(mobile)) {
+  setMobileError('Invalid Mobile format');
+}
+
+if(!password.trim()){
+  setPasswordError('Password is required')
+}
+
+else if (password && !validatePassword(password)) {
+  setPasswordError(
+    'Password should be at least 8 characters and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter'
+  );
+}
 
     try {
       const { data } = await axios.put(`/api/auth/account`, {
@@ -120,13 +152,13 @@ const Account = () => {
 
   return (
     <Layout title={'Account'}>
-      <div className='column-fluid  d-flex'>
+      <div className='column-fluid  d-flex  '>
         <div className='col-3 m-3 p-3'>
           <UserMenu />
         </div>
-        <div className='col-9 user-account'>
+        <div className='col-9 user-account register'>
           <div className='register '>
-            <h1 className='home-heading mb-3'>Edit Account Details</h1>
+            <h1 className='home-heading mb-3 '>Edit Account Details</h1>
             <form onSubmit={submitForm} >
               <div className='mb-3 register-input'>
                 <input
@@ -140,48 +172,52 @@ const Account = () => {
                 {nameError && <div className='invalid-feedback'>{nameError}</div>}
               </div>
               <div className='mb-3 register-input'>
-                <input
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                  placeholder='Email'
-                  type='email'
-                  className='form-control'
-                  id='exampleInputEmail1'
-                  disabled
-                />
-              </div>
-              <div className='mb-3 register-input'>
-                <input
-                  onChange={handlePasswordChange}
-                  value={password}
-                  placeholder='Password'
-                  type='password'
-                  className={`form-control ${passwordError ? 'is-invalid' : ''}`}
-                  id='exampleInputPassword1'
-                />
-                {passwordError && <div className='invalid-feedback'>{passwordError}</div>}
-              </div>
-              <div className='mb-3 register-input'>
-                <input
-                  onChange={handleMobileChange}
-                  value={mobile}
-                  placeholder='Mobile Number'
-                  type='number'
-                  className={`form-control ${mobileError ? 'is-invalid' : ''}`}
-                  id='exampleInputMobile1'
-                />
-                {mobileError && <div className='invalid-feedback'>{mobileError}</div>}
-              </div>
-              <div className='mb-3 register-input'>
-                <input
-                  onChange={(e) => setAddress(e.target.value)}
-                  value={address}
-                  placeholder='Address'
-                  type='text'
-                  className='form-control'
-                  id='exampleInputAddress1'
-                />
-              </div>
+            <input
+      
+             disabled
+              value={email}
+              placeholder='Email'
+              type='email'
+              className={`form-control `}
+              id='exampleInputEmail1'
+            />
+          </div>
+          <div className="mb-3 register-input">
+            <input
+
+              onChange={handlePasswordChange}
+              value={password}
+              placeholder="Password"
+              type="password"
+              className={`form-control ${passwordError ? 'is-invalid' : ''}`}
+              id="exampleInputPassword1"
+            />
+            {passwordError && <div className="invalid-feedback">{passwordError}</div>}
+          </div>
+          <div className="mb-3 register-input">
+            <input
+ 
+              onChange={handleMobileChange}
+              value={mobile}
+              placeholder="Mobile Number"
+              type="number"
+              className={`form-control ${mobileError ? 'is-invalid' : ''}`}
+              id="exampleInputMobile1"
+            />
+            {mobileError && <div className="invalid-feedback">{mobileError}</div>}
+          </div>
+          <div className="mb-3 register-input">
+            <input
+          
+              onChange={handleaddressChange}
+              value={address}
+              placeholder="Address"
+              type="text"
+              className={`form-control ${addressError ? 'is-invalid' : ''}`}
+              id="exampleInputAddress1"
+            />
+             {addressError && <div className="invalid-feedback">{addressError}</div>}
+          </div>
               <button type='submit' className='btn btn-warning'>
                 Update
               </button>

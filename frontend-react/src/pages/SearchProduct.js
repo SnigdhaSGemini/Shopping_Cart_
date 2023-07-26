@@ -9,9 +9,9 @@ const SearchProduct = () => {
     const navigate = useNavigate();
   return (
     <Layout title={"Search Products"}>
-      <div className='text-center'>
-        <h1>Search Results</h1>
-        <h6>{vals?.results.length < 1 ? "No Products Found" : `Found ${vals?.results.length} matching products`}</h6>
+      <div className='text-center h-100'>
+        <h1 className='home-heading pt-4'>Search Results</h1>
+        <h6 className='found-result mb-4'>{vals?.results.length < 1 ? "No Products Found" : `Found ${vals?.results.length} matching products`}</h6>
        <div className='d-flex flex-wrap justify-content-around'>
        {vals?.results.map(prod =>(<>
         <div className="card m-1 col-5"  >
@@ -21,7 +21,7 @@ const SearchProduct = () => {
     <p className="card-text">{prod.description.substring(0,25)} ...</p>
     <p className="card-text">$ {prod.price}</p>
   <div>
-  <button href="#" className="btn btn-warning m-1" onClick={()=> navigate(`/product-details/${prod.slug}`)}>See More</button>
+  <button href="#" className="btn btn-outline-secondary m-1" onClick={()=> navigate(`/product-details/${prod.slug}`)}>See More</button>
 </div>
 
   </div>

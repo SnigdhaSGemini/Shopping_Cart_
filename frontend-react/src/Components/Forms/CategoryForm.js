@@ -3,7 +3,7 @@ import React from 'react'
 const CategoryForm = ({submitForm,newCategory,setNewCategory} ) => {
   return (
     <>
-    <div>
+    <div className='bg-light p-2'>
   <form onSubmit={submitForm}>
     <div className="form-group">
       <input type="text" className="form-control" placeholder='New Category' value={newCategory} onChange={(e) => setNewCategory(e.target.value)}/>

@@ -93,7 +93,7 @@ const CreateCategory = () => {
 
   return (
     <Layout title={"Create Category"}>
-       <div className='conatiner-fluid d-flex justify-content-around m-3 p-3'>
+       <div className='conatiner-fluid d-flex justify-content-around  p-3'>
       <div className='col-3'>
        <AdminMenu/>
       </div>
@@ -103,7 +103,7 @@ const CreateCategory = () => {
         <CategoryForm submitForm={submitForm} newCategory={category} setNewCategory={setCategory}/>
        </div>
        <div>
-       <table className="table table-bordered">
+       <table className="table table-bordered ">
   <thead>
     <tr>
       <th scope="col">Name</th>

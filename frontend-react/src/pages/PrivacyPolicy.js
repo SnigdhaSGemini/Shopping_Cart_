@@ -6,7 +6,7 @@ import {MdPrivacyTip} from 'react-icons/md'
 const PrivacyPolicy = () => {
   return (
     <Layout title={"Privacy Policy"}>
-      <div className="row contactus ">
+      <div className="row contactus h-100">
         <div className="col-6 ">
           <img
             src="/Images/policy.png"
