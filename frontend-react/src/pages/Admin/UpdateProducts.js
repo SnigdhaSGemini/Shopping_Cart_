@@ -30,7 +30,7 @@ const UpdateProducts = () => {
     // get
     const getProduct = async () =>{
         try{
-            const {data} = await axios.get( `/api/product//get-product/${params.slug}`)
+            const {data} = await axios.get( `/api/product/get-product/${params.slug}`)
             setName(data.getProduct.name);
             setid(data.getProduct._id);
             setDescription(data.getProduct.description)

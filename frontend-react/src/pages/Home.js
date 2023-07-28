@@ -6,6 +6,7 @@ import { Prices } from '../Components/Prices';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../Contexts/Cart';
 import toast from 'react-hot-toast';
+import { useAuth } from '../Contexts/Authorization';
 
 // home page
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
   const [load, setLoad] = useState(false);
 const [checked,setChecked] = useState([]);
 const [radio , setRadio] = useState([]);
+const [authorization , setAuthorization] = useAuth();
 
 const navigate = useNavigate();
     // get all categories
@@ -137,9 +139,10 @@ const navigate = useNavigate();
     <p className="card-text card-price">$ {prod.price}</p>
   <div>
   <button href="#" className="btn btn-warning m-1 see-more-button" onClick={()=> navigate(`/product-details/${prod.slug}`)}>See More</button>
-  <button href="#" className="btn btn-outline-secondary m-1" onClick={() => {setCart([...cart,prod]);
+  { authorization?.token ? (<button href="#" className="btn btn-outline-secondary m-1" onClick={() => {setCart([...cart,prod]);
     localStorage.setItem("cart", JSON.stringify([...cart,prod]))
-    toast.success("Item Added To Cart")}}>Add to Cart</button>
+    toast.success("Item Added To Cart")}}>Add to Cart</button>) : (<button href="#" className="btn btn-outline-secondary m-1" onClick={() => { toast.error("Please Login to Add Items to Cart!");
+   setTimeout(()=>{navigate("/login")},1000) }}>Add to Cart</button>) }
 </div>
 
   </div>

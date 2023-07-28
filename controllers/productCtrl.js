@@ -177,7 +177,6 @@ export const productFiltersCtrl = async (req,res) =>{
             if(radio.length){
                 argument.price = {$gte: radio[0], $lte: radio[1]}
             }
-            console.log(argument);
             const filteredProducts = await productModel.find(argument);
             res.status(200).send({
                 success: true,

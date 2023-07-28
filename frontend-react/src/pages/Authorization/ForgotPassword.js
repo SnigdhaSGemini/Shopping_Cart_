@@ -12,6 +12,7 @@ const ForgotPassword = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [secretKeyError, setSecretKeyError] = useState('');
+  
   const validateEmail = (email) => {
     // email regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

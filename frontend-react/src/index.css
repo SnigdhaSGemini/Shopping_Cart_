@@ -13,7 +13,7 @@ main{
   overflow-y: scroll;
   background-color: white;
   -ms-overflow-style: none; 
-  scrollbar-width: none; 
+  scrollbar-width: none;
 }
 main::-webkit-scrollbar {
   display: none;

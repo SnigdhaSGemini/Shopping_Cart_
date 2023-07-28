@@ -95,7 +95,7 @@ const Login = () => {
           setCart([]);
          }
          else{
-          localStorage.setItem("cart",JSON.stringify(localStorage.getItem(res.data.user.name) ));
+          localStorage.setItem("cart",localStorage.getItem(res.data.user.name));
            setCart(JSON.parse(localStorage.getItem(res.data.user.name)));
          }
       } else {

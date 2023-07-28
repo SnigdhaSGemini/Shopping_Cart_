@@ -37,9 +37,7 @@ const Cart = () => {
             let idx = Mycart.findIndex(item => item._id === id) ;
             if (idx !== -1) {
                 const order = Mycart.splice(idx, 1);
-                console.log(order);
                 const {data} = await axios.post(`/api/product/orders/`,{cart: order});
-                console.log(data.cart);
                 toast.success("Order Placed !");
                 setCart(Mycart);
                 localStorage.setItem("cart",JSON.stringify(Mycart));

@@ -11,6 +11,7 @@ import { CartProvider } from './Contexts/Cart';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  // Context providers
   <AuthProvider>
  <SearchProvider>
 <CartProvider>

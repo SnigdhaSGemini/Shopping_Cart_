@@ -19,7 +19,7 @@ const SearchProduct = () => {
   <div className="card-body">
     <h5 className="card-title">{prod.name}</h5>
     <p className="card-text">{prod.description.substring(0,25)} ...</p>
-    <p className="card-text">$ {prod.price}</p>
+    <p className="card-price">$ {prod.price}</p>
   <div>
   <button href="#" className="btn btn-outline-secondary m-1" onClick={()=> navigate(`/product-details/${prod.slug}`)}>See More</button>
 </div>

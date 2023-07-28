@@ -4,6 +4,7 @@ import JWT from 'jsonwebtoken';
 import orderModel from "../models/orderModel.js";
 
 
+
 export const registerCtrl = async (req,res) =>{
     try{
         const {name, email , password , mobile,secretKey, address } = req.body;
@@ -163,6 +164,8 @@ export const forgotPasswordCtrl = async (req,res) =>{
         })
     }
 }
+
+
 export const testCtrl = (req,res)=>{
     res.send("protected route")
 }

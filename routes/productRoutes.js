@@ -7,6 +7,7 @@ const route = express.Router();
 // create
 route.post("/create-product", isSignedIn, isAdmin, formidable(), createProductCtrl);
 
+
 // get all
 route.get("/all-product",getAllProductCtrl)
 
