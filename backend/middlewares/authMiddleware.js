@@ -4,7 +4,7 @@ import userModel from '../models/userModel.js';
 // to check if signed in
 export const isSignedIn = async (req,res,next)=>{
     try{
-        const getToken = JWT.verify(req.headers.authorization,process.env.JWT_SECRET)
+        const getToken = JWT.verify(req.headers.authorization,(process.env.JWT_SECRET ||  'kjdkefmojit8549878'  ))
         req.user = getToken;
         next()
     }catch(err){
