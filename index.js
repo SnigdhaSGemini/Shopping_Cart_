@@ -2,10 +2,10 @@ import express from "express";
 import colors from "colors";
 import dotenv from "dotenv";
 import morgan from "morgan";
-import dbConnect from "./configs/databaseConnection.js";
-import authRoutes from "./routes/authRoutes.js"
-import categoryRoutes from './routes/categoryRoutes.js'
-import productRoutes from './routes/productRoutes.js'
+import dbConnect from "./backend/configs/databaseConnection.js";
+import authRoutes from "./backend/routes/authRoutes.js"
+import categoryRoutes from './backend/routes/categoryRoutes.js'
+import productRoutes from './backend/routes/productRoutes.js'
 import cors from "cors";
 
 // configure env
@@ -33,7 +33,7 @@ app.get('/',(req,res)=>{
 })
 
 // port
-const PORT=process.env.PORT || 5000
+const PORT=process.env.PORT || 8000
 
 // run listen
 app.listen(PORT,()=>{
