@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useAuth } from '../../Contexts/Authorization';
 import { useCart } from '../../Contexts/Cart';
+import { validateEmail, validatePassword } from '../../Components/Validations';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,18 +17,6 @@ const Login = () => {
   const [authorization, setAuthorization] = useAuth();
   const [cart,setCart] = useCart();
 
-  // validate email
-  const validateEmail = (email) => {
-    // email regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-    // validate password
-    const validatePassword = (password) => {
-      // Password should be at least 8 characters long and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-      return passwordRegex.test(password);
-    };
 
      // validation on email change
   const handleEmailChange = (e) => {

@@ -3,6 +3,7 @@ import Layout from '../../Components/Layouts/Layout';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { validateEmail, validatePassword } from '../../Components/Validations';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -13,17 +14,7 @@ const ForgotPassword = () => {
   const [passwordError, setPasswordError] = useState('');
   const [secretKeyError, setSecretKeyError] = useState('');
   
-  const validateEmail = (email) => {
-    // email regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const validatePassword = (password) => {
-    // Password should be at least 8 characters long and contain at least 1 letter, 1 number, 1 capital letter, and 1 small letter
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    return passwordRegex.test(password);
-  };
+ 
 
   // validation on email change
   const handleEmailChange = (e) => {
