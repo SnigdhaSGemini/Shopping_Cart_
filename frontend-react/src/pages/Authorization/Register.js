@@ -3,6 +3,7 @@ import Layout from '../../Components/Layouts/Layout';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { validateEmail, validateMobile, validateName, validatePassword } from '../../Components/Validations';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -20,28 +21,6 @@ const Register = () => {
   const [secretKeyError, setSecretKeyError] = useState('');
   const [addressError, setaddressError] = useState('');
 
-  const validateEmail = (email) => {
-    // email regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-  const validatePassword = (password) => {
-    // password regex
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    return passwordRegex.test(password);
-  };
-
-  const validateName = (name) => {
-    // name regex
-    const nameRegex = /^[A-Za-z\s]+$/;
-    return nameRegex.test(name);
-  };
-
-  const validateMobile = (mobile) => {
-    // mobile regex
-    const mobileRegex = /^[6-9]\d{9}$/;
-    return mobileRegex.test(mobile);
-  };
 
   const handleEmailChange = (e) => {
     setemail(e.target.value);

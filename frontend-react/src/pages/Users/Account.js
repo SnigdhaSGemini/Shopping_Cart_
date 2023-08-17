@@ -4,6 +4,7 @@ import UserMenu from '../../Components/Layouts/UserMenu';
 import { useAuth } from '../../Contexts/Authorization';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { validateMobile, validateName, validatePassword  } from '../../Components/Validations';
 
 const Account = () => {
   const [authorization, setAuthorization] = useAuth();
@@ -26,24 +27,7 @@ const Account = () => {
     setAddress(address);
   }, [authorization?.user]);
 
-  const validatePassword = (password) => {
-    // password regex
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    return passwordRegex.test(password);
-  };
-
-  const validateName = (name) => {
-    // name regex
-    const nameRegex = /^[A-Za-z\s]+$/;
-    return nameRegex.test(name);
-  };
-
-  const validateMobile = (mobile) => {
-    // mobile regex
-    const mobileRegex = /^[6-9]\d{9}$/;
-    return mobileRegex.test(mobile);
-  };
-
+ 
 
   const handleNameChange = (e) => {
     setName(e.target.value);
