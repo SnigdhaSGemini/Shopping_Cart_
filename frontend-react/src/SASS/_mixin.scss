@@ -1,0 +1,17 @@
+@mixin set-color($color){
+    color: $color !important;
+}
+@mixin set-scrollbar(){
+    overflow-y: scroll;
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+      }
+}
+@mixin flex-property($content){
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: $content;
+    align-items: center;
+}

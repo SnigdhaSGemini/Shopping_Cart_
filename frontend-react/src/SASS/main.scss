@@ -1,0 +1,388 @@
+@import "mixin";
+@import "variables";
+
+*{
+    margin:0;
+    padding:0;
+    font-family:  'Ysabeau', sans-serif;
+  }
+
+  body{
+    background-color: $body-bg-color;
+  }
+  
+  main{
+    @include set-scrollbar();
+    height:80vh ;
+    background-color: $main-bg-color;
+   
+  }
+  
+  /* footer */
+  .footer{
+    bottom: 0;
+    width: 100%;
+  }
+  .footer-links{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-around;
+  }
+  .footer-link{
+  color: $main-bg-color;
+  text-decoration: none;
+  &:hover{
+    color:$hover-color;
+  }
+  }
+ 
+  /* navbar */
+  .nav-link , .navbar-brand{
+    @include set-color($main-bg-color);
+  }
+  .nav-link:hover{
+    @include set-color($hover-color);
+  }
+  .navbar-brand:hover{
+    color: $main-bg-color;
+  }
+  .nav-item {
+    ul{
+        background-color: $body-bg-color;
+      }
+  }
+  .navbar-toggler{
+   border: 2px solid $main-bg-color;
+   transition: .3s;
+   height: 4vw;
+   width: 5vw;
+   &:hover{
+    border: 2px solid $hover-color;
+  }
+  }
+
+  
+  /* Page not found */
+  .errorPage{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 60vh;
+    justify-content:center;
+    flex-direction: column;
+    align-items: center;
+  }
+  .errorPage {
+    h2{
+        color:$error-color ;
+        font-weight: bold;
+        margin-bottom: 2vw;
+       }
+  }
+
+  .error-button{
+    text-decoration: none;
+    color: $text-color;
+    border: 1px solid $text-color;
+    padding: 0vw 1vw ;
+    border-radius: 1vw;
+    transition: .3s;
+
+    &:hover{
+        background-color:$error-bg;
+        color:$main-bg-color;
+        border:none;
+      }
+  }
+
+  
+  /* contact us */
+  .contactus{
+    @include flex-property(space-around);
+    background-color: $main-bg-color;
+    overflow: visible;
+    overflow-wrap: break-word;
+    padding:1vw;
+  }
+  .contactus {
+    ul{
+        li{
+            padding-bottom: 1vw;
+        }
+    }
+    p{
+        padding-bottom: 1vw;
+    }
+  }
+
+  /* about */
+  .about{
+  
+    display:flex;
+    flex-wrap: wrap;
+    
+  }
+  .contact{
+    background-color: $footer-bg !important;
+  }
+  /* register */
+  
+  .register{
+   @include flex-property(center);
+    flex-direction: column;
+    padding: 2vw;
+    height: 100%;
+  }
+  .register {
+    form{
+        background-color: $form-bg;
+        padding: 2vw;
+        border-radius: 1vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+  }
+  .register-input{
+    display:flex;
+    width: 30vw !important;
+  }
+  .register{
+    h1{
+        margin-bottom: 2vw;
+        font-weight: 600;
+      }
+      form {
+        button{
+            background-color: $form-btn;
+            color: $main-bg-color;
+            border:none;
+        
+            &:hover{
+                background-color: $form-bg;
+                color:$form-btn-hover;
+                border:1px solid $form-btn-hover;
+              }
+          }
+      }
+     
+  }
+  .register-input{
+    label{
+        width: 15vw;
+        margin-right: 5vw;
+        overflow: visible;
+        overflow-wrap: break-word;
+      }
+      input{
+        color: $input-color;
+      }
+  }
+
+
+  
+  .forgot-password{
+    background-color: $text-color !important;
+    margin-bottom: 1vw !important;
+
+    &:hover{
+        color: $text-color !important;
+        border:1px solid $text-color !important;
+        background-color: $form-bg !important;
+      }
+  }
+  
+  /* loading page */
+  .loading-page{
+    height: 100vh;
+    @include flex-property(center);
+  }
+  
+  /* category */
+  .update-category{
+    margin-right: 1vw;
+    margin-bottom: 1vw;
+  }
+  .category-dropdown:hover{
+    background-color: $hover-color;
+  }
+  
+  .all-category{
+    background: radial-gradient(circle at top, #dceffe , #ebe5ff)
+  }
+  .category-name{
+    background: radial-gradient(circle at top, #c0b2f5, #653bfc);
+    border: none;
+    color: $main-bg-color;
+
+    &:hover{
+        background: radial-gradient(circle at top,  #653bfc,  #653bfc);
+      }
+  }
+
+  /* product */
+  .product-card{
+    color: $text-color;
+    text-decoration: none;
+  }
+  
+  
+  /* search */
+  .search-input{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .search-button{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  /* home */
+  .home-heading{
+    font-weight: 700;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:$heading;
+  }
+  .filter{
+    border-bottom: 1px solid $heading;
+  }
+  
+  .home-filter{
+    font-weight: 550;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .filters{
+    font-weight: 100;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+  }
+  .load-button{
+    background-color: $main-bg-color;
+    border:none;
+    font-weight: 600;
+    padding: 0;
+    margin: 2vw;
+    color: $heading;
+    border-bottom: 1px solid $heading;
+    border-radius: 0;
+
+    &:hover{
+        background-color: $main-bg-color;
+        border:none;
+        color: $btn-hover;
+      }
+  }
+  
+  
+  /* card */
+  .card-title{
+    font-weight: 600;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-bottom: 2vw;
+  }
+  .card-text{
+    font-size: small;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  .card-price{
+    font-size: large;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: $btn-hover;
+  }
+  
+  .see-more-button{
+    background-color: $main-bg-color;
+    border:none;
+    font-weight: 600;
+    padding: 0;
+    margin: 2vw;
+    border-radius: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+    &:hover{
+        border-bottom: 1px solid $see-more-btn;
+        background-color: $main-bg-color;
+        color:$see-more-btn
+      }
+  }
+  
+  .btn-outline-secondary:hover{
+  background-color: $secndry-hover;
+  }
+  
+  /* category */
+  .category{
+    padding: 0vw 5vw;
+  }
+  .found-result{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:$see-more-btn;
+    font-size: small;
+  }
+  .prod-details{
+    font-size: large;
+  }
+  
+  .card-desc{
+    font-size: larger;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  }
+  
+  .admin-heading{
+   font-family:'Courier New', Courier, monospace;
+   font-weight: 600;
+  }
+  
+  /* cart */
+  .cart-item-heading{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 2vw;
+    font-size: larger !important;
+    font-weight: 600;
+    color:$item-heading;
+  }
+  
+  .total-head{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:$see-more-btn;
+    font-size: small;
+    font-weight: 600;
+  }
+  .total-amount{
+    font-size: larger;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #1a8b09;
+  }
+  .cart{
+    background-color:rgb(234, 246, 246);
+    padding: 5vw;
+  }
+  .border{
+
+    @include set-scrollbar();
+    overflow-x:scroll;
+    overflow-wrap: break-word;
+  }
+  
+  
+  
+  /* user dashboard */
+  .user-account{
+  background: linear-gradient(0deg, $form-btn-hover 0%, #dbf5f4 100%);
+  }
+  
+  /* errors */
+  .register-input{
+    display: flex;
+    flex-wrap: wrap;
+    width: 40vw;
+  }
+  
+  thead tr, td , th{
+    border: none;
+  }
+  /* cart */
+  .set-cart{
+    height: 75%;
+  }
